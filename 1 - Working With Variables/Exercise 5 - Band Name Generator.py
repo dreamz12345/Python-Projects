@@ -1,7 +1,7 @@
 import os
 os.system("cls")
 
-zmienna1 = "dupa"
+zmienna1 = "test"
 zmienna2 = "jakas dluga"
 print(f"Jakis tekst{zmienna1:->40s}")
 print(f"Jakis tekst{zmienna2:->40s}")
