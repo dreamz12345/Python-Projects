@@ -1,3 +1,5 @@
+# Coded by Lukasz Spychala
+
 import os
 os.system("cls")
 

@@ -1,6 +1,7 @@
+# Coded by Lukasz Spychala
+
 import os
 os.system("cls")
-
 
 weight = input("Enter your weight (kg): ")
 height = input("Enter your height (m): ")
