@@ -2,6 +2,11 @@
 
 Author of this repository: Lukasz Spychala
 
+# Table-of-content
+
+- [**1-Working with variables**](1%20-%20Working%20With%20Variables/Readme.md)
+- [**2-Data types**](2%20-%20Data%20Types/Readme.md)
+
 This repository contains all of my code that I created while  
 learning to code in Python. I decided to use GitHub to learn  
 version control software and build my portfolio.  
