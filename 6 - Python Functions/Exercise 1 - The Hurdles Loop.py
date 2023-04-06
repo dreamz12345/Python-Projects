@@ -1,3 +1,4 @@
+# Coded by Lukasz Spychala
 
 # this code is supposed to be run at reeborg.ca
 
