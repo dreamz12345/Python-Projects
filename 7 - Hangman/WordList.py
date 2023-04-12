@@ -1,1 +1,1 @@
-words = ["ardvark", "baboon", "camel"]
+words = ["ardvark", "baboon", "camel", "cat", "sofa"]
