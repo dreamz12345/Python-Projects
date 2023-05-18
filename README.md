@@ -8,6 +8,7 @@ Author of this repository: Lukasz Spychala
 - [**2 - Data types**](2%20-%20Data%20Types/Readme.md)
 - [**3 - Logical Operators**](3%20-%20Logical%20Operators/Readme.md)
 - [**11 - Simplified Blackjack**](11%20-%20Simplified%20Blackjack/readme.md)
+- [**15 - Coffee Machine**](15%20-%20Coffee%20Machine/readme.md)
 
 This repository contains all of my code that I created while  
 learning to code in Python. I decided to use GitHub to learn  
