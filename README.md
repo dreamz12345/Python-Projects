@@ -4,10 +4,10 @@ Author of this repository: Lukasz Spychala
 
 # Table-of-content
 
-- [**1-Working with variables**](1%20-%20Working%20With%20Variables/Readme.md)
-- [**2-Data types**](2%20-%20Data%20Types/Readme.md)
-- [**3-Logical Operators**](3%20-%20Logical%20Operators/Readme.md)
-- [**11-Simplified Blackjack**](11%20-%20Simplified%20Blackjack/readme.md)
+- [**1 - Working with variables**](1%20-%20Working%20With%20Variables/Readme.md)
+- [**2 - Data types**](2%20-%20Data%20Types/Readme.md)
+- [**3 - Logical Operators**](3%20-%20Logical%20Operators/Readme.md)
+- [**11 - Simplified Blackjack**](11%20-%20Simplified%20Blackjack/readme.md)
 
 This repository contains all of my code that I created while  
 learning to code in Python. I decided to use GitHub to learn  
