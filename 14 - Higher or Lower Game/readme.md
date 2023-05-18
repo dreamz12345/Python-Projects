@@ -1,8 +1,9 @@
 # Higher or Lower Game.
 
-Implementation of Higher or Lower Game with logo and data
+    Implementation of Higher or Lower Game with logo and data
 provided by the course.
-
+    The game prompts two accounts and user must guess which of the accounts
+has more followers. The game goes on, until user makes a mistake.
 
 ## Features
 
