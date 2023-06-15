@@ -1,20 +1,13 @@
 import turtle
 import random
-
+from enum import Enum
+from typing import Set
 
 class GameSettings:
 
     def __init__(self) -> None:
 
-        self.game_title = "Snake Game!"
 
-        self.window_width = 600
-        self.window_height = 600
-
-        self.colormode = 255
-
-        self.step_speed = 2
-        self.frame_delay_ms = 10
 
         self.angle = 1
         self.angle_max = 10
@@ -32,13 +25,94 @@ class GameSettings:
         self.snake_stamp_clock = 0
         self.snake_stamp_reset = 16
 
+class Arrow(Enum):
+    LEFT = 0
+    RIGHT = 1
+
+class KeysPressed:
+
+    keys_pressed : Set[Arrow] = None
+
+    def __init__(self) -> None:
+        self.keys_pressed = {}
+
+    def press(self, arrow : Arrow):
+        self.keys_pressed.add(arrow)
+
+    def unpress(self, arrow : Arrow):
+        self.keys_pressed.remove(arrow)
+
+    def get_pressed(self) -> Set(Arrow):
+        return  self.keys_pressed
+
+class GameEngine:
+
+    # Parameters
+
+    GAME_TITLE : str = "Snake Game!"
+
+    WINDOW_WIDTH : int = 600
+    WINDOWS_HEIGHT : int = 600
+
+    COLORMODE : int = 255
+
+    STEP_SPEED : int = 2
+    FRAME_DELAY_MS : int = 10
+
+    # Fields
+
+    turtle_screen : turtle._Screen = None
+    keys_pressed : KeysPressed = None
+    on_tick : callable(Set(Arrow)) = None
+    on_clear : callable = None
+
+    def __init__(self,
+                 on_tick : callable,
+                 on_clear : callable
+                ) -> None:
+
+        self.on_tick = on_tick
+        self.on_clear = on_clear
+        screen = turtle.Screen()
+        screen.tracer(0)
+        screen.setup(self.WINDOW_WIDTH, self.WINDOWS_HEIGHT)
+        screen.title(self.GAME_TITLE)
+        screen.colormode(self.COLORMODE)
+        self.turtle_screen = screen
+        self.keys_pressed = KeysPressed()
+
+    def setup_key_events(self):
+
+        keys = self.keys_pressed
+        screen = self.turtle_screen
+
+        screen.onkeypress(keys.press(Arrow.LEFT), "Left")
+        screen.onkeypress(keys.press(Arrow.RIGHT), "Right")
+
+        screen.onkeyrelease(keys.unpress(Arrow.LEFT), "Left")
+        screen.onkeyrelease(keys.unpress(Arrow.RIGHT), "Right")
+
+        screen.onkey(fun=self.handle_clear, key="e")
+
+    def on_tick(self):
+        self.on_tick(self.keys_pressed.get_pressed())
+        self.turtle_screen.update()
+        self.turtle_screen.ontimer(fun=self.on_tick, t=self.FRAME_DELAY_MS)
+
+    def start_game(self):
+        self.setup_key_events()
+        self.on_tick()
+
+    def handle_clear(self):
+        if self.on_clear is not None:
+            self.on_clear()
 
 class SnakeGame:
 
     def __init__(self) -> None:
 
         self.s = GameSettings()
-        self.keys_pressed = set("u")
+        
         self.actions = {
             "u": lambda: self.snake.forward(self.s.step_speed),
             "l": lambda: self.snake.left(self.s.angle),
@@ -53,12 +127,7 @@ class SnakeGame:
         self.starting_snake_settings()
         self.snake_hitbox = []
 
-        self.screen = turtle.Screen()
-        self.screen.tracer(0)
-        self.screen.setup(self.s.window_width,
-                          self.s.window_height)
-        self.screen.title(self.s.game_title)
-        self.screen.colormode(self.s.colormode)
+
 
 
     def starting_snake_settings(self):
@@ -162,11 +231,7 @@ class SnakeGame:
         self.snake.color(new_color)
 
 
-    def handle_keys_pressed(self):
 
-        # Search for keys pressed by the user and steer snake accordingly
-        for action in self.keys_pressed:
-            self.actions[action]()
 
 
     def handle_angle_speed(self):
@@ -187,18 +252,7 @@ class SnakeGame:
         self.starting_food_settings()
 
 
-    def user_input(self):
 
-        #self.screen.onkeypress(lambda: self.keys_pressed.add("u"), "Up")
-        self.screen.onkeypress(lambda: self.keys_pressed.add("l"), "Left")
-        self.screen.onkeypress(lambda: self.keys_pressed.add("r"), "Right")
-
-        #self.screen.onkeyrelease(lambda: self.keys_pressed.remove("u"), "Up")
-        self.screen.onkeyrelease(lambda: self.keys_pressed.remove("l"), "Left")
-        self.screen.onkeyrelease(lambda: self.keys_pressed.remove("r"), "Right")
-
-        self.screen.onkey(fun=self.clear_screen, key="e")
-        self.screen.onkey(fun=self.change_color, key="f")
 
 
     def tick(self):
@@ -212,8 +266,7 @@ class SnakeGame:
         # for index, element in enumerate(self.snake_hitbox):
         #     print(f"{index}. {element}")
         # print("")
-        self.screen.update()
-        self.screen.ontimer(fun=self.tick, t=self.s.frame_delay_ms)
+
 
 
     def main(self):
