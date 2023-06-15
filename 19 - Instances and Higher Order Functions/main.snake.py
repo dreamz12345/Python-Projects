@@ -74,6 +74,9 @@ class GameEngine:
         self.turtle_screen = screen
         self.keys_pressed = KeysPressed()
 
+    def get_screen_size(self):
+        return (self.WINDOW_WIDTH, self.WINDOWS_HEIGHT)
+
     def setup_key_events(self):
 
         keys = self.keys_pressed
@@ -116,7 +119,7 @@ class Snake:
 
     STEP_SPEED : int = 2
 
-    COLLISION_RADIUS : int = 10
+    COLLISION_RADIUS : int = 50
     
     # Variable
 
@@ -151,23 +154,75 @@ class Snake:
             collision = True
         return collision
 
+class Food:
 
+    FOOD_SHAPE = "circle"
+    FOOD_SHAPE_SIZE = 2
+    FOOD_COLOR = "red"
+    PADDING = 100
 
-# =============================================================================
+    # Variable
 
+    food_turtle : turtle.Turtle = None
+    screen_size : tuple[int] = None
+
+    def __init__(self, screen_size : tuple[int]) -> None:
+        self.screen_size = screen_size
+        self.food_turtle = turtle.Turtle()
+        self.food_turtle.shape(self.FOOD_SHAPE)
+        self.food_turtle.shapesize(self.FOOD_SHAPE_SIZE,
+                                    self.FOOD_SHAPE_SIZE)
+        self.food_turtle.color(self.FOOD_COLOR)
+        self.food_turtle.penup()
+
+    def get_position(self):
+        return self.food_turtle.position()
+    
+    def move_to_new_position(self):
+            x = self.screen_size[0] - self.PADDING
+            y = self.screen_size[1] - self.PADDING
+            random_x = random.randint((x / -2),
+                                      (x / 2))
+            random_y = random.randint((y / -2),
+                                      (y / 2))
+            self.food_turtle.goto((random_x, random_y))
 
 class SnakeGame:
 
     engine : GameEngine = None
     snake : Snake = None
+    food : Food = None
 
     def __init__(self) -> None:
 
+        self.engine = GameEngine(self.on_update, None)
         self.snake = Snake()
-        self.engine = GameEngine(self.snake.on_update, None)
+        self.food = Food(self.engine.get_screen_size())
         self.engine.start_game()
 
+    def on_update(self, arrows : Set[Arrow]):
+        self.snake.on_update(arrows)
+        food_pos = self.food.get_position()
+        collision = self.snake.is_collision(food_pos[0], food_pos[1])
+        if collision:
+            self.food.move_to_new_position()
 
+
+snake_game = SnakeGame()
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
         # self.s = GameSettings()
         
         # self.actions = {
@@ -316,5 +371,5 @@ class SnakeGame:
     #     self.screen.exitonclick()
 
 
-snake_game = SnakeGame()
+
 
