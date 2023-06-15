@@ -31,7 +31,6 @@ class KeysPressed:
         self.keys_pressed = set()
 
     def press(self, arrow : Arrow):
-        print(arrow)
         self.keys_pressed.add(arrow)
 
     def unpress(self, arrow : Arrow):
@@ -118,7 +117,7 @@ class Snake:
     STEP_SPEED : int = 2
 
     COLLISION_RADIUS : int = 10
-
+    
     # Variable
 
     snake_stamp_clock : int = 0
@@ -126,9 +125,12 @@ class Snake:
 
     def __init__(self) -> None:
         self.snake_turtle = turtle.Turtle()
+        self.snake_turtle.shape(self.SNAKE_SHAPE)
+        self.snake_turtle.shapesize(self.SNAKE_SHAPE_SIZE,
+                                    self.SNAKE_SHAPE_SIZE)
+        self.snake_turtle.penup()
 
     def on_update(self, arrows : Set[Arrow]):
-        print(arrows)
         if Arrow.LEFT in arrows:
             self.snake_turtle.left(self.TURN_ANGLE)
         if Arrow.RIGHT in arrows:
