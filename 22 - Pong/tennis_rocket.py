@@ -4,7 +4,7 @@ import turtle
 class TennisRocket:
     COLOR: str = "white"
     SHAPE: str = "square"
-    OFFSET: int = 400
+    OFFSET: int = 470
     STRETCH_FACTOR: float = 2
     FACE_NORTH: float = 90
     is_right: bool = None
