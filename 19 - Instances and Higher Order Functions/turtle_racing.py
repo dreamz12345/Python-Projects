@@ -3,9 +3,7 @@ import random
 
 
 class GameSettings:
-
     def __init__(self) -> None:
-
         self.game_title = "Turtle Racing"
 
         self.window_width = 600
@@ -16,17 +14,31 @@ class GameSettings:
 
         self.colors = ["red", "green", "blue", "gold", "purple"]
 
-        self.num_of_turtles = 4 #Max 5 turtles
+        self.num_of_turtles = 4  # Max 5 turtles
         self.turtle_shape = "turtle"
         self.turtle_shape_size = 1
         self.turtle_line_size = 3
         self.spacing = self.window_height / (self.num_of_turtles + 1)
 
 
-class TurtleRacing:
+class RunningTurtle:
+    LEAP_FORWARD: int = 1
+    SETTINGS = GameSettings()
+
+    new_turtle: turtle.Turtle = None
 
     def __init__(self) -> None:
+        new_turtle = turtle.Turtle()
+        new_turtle.shape(self.SETTINGS.turtle_shape)
+        new_turtle.penup()
 
+        self.new_turtle = new_turtle
+
+
+class TurtleRacing:
+    turtles: list[RunningTurtle]
+
+    def __init__(self) -> None:
         self.winner = None
         self.settings = GameSettings()
         self.screen = turtle.Screen()
@@ -39,18 +51,12 @@ class TurtleRacing:
         self.draw_line("start")
         self.draw_line("finish")
 
-
     def create_turtles(self):
-
         self.turtles = []
         for index in range(self.settings.num_of_turtles):
-            new_turtle = turtle.Turtle()
-            new_turtle.leapforward = 1
-            new_turtle.color(self.settings.colors[index])
-            new_turtle.shape(self.settings.turtle_shape)
-            new_turtle.penup()
+            new_turtle = RunningTurtle()
+            new_turtle.new_turtle.color(self.settings.colors[index])
             self.turtles.append(new_turtle)
-
 
     def set_turtles(self):
         """Set turtles at the starting position"""
@@ -60,12 +66,10 @@ class TurtleRacing:
         ADJUST_TO_TURTLE_SIZE = 15
         x -= ADJUST_TO_TURTLE_SIZE
         for racing_turtle in self.turtles:
-            racing_turtle.setposition(x, y)
+            racing_turtle.new_turtle.setposition(x, y)
             y += self.settings.spacing
 
-
     def draw_line(self, line="start"):
-
         if line == "start":
             inverter = -1
         else:
@@ -85,40 +89,33 @@ class TurtleRacing:
         working_turtle.forward(self.settings.window_height)
         working_turtle.penup()
 
-
     def turtle_move_forward(self):
-
         for index, racing_turtle in enumerate(self.turtles):
             x = random.randint(1, 3)
-            self.turtles[index].forward(racing_turtle.leapforward + x)
-
+            self.turtles[index].new_turtle.forward(racing_turtle.LEAP_FORWARD + x)
 
     def assing_random_speed(self):
-
         for racing_turtle in self.turtles:
             random_speed = random.randint(1, 5) * 0.1
-            racing_turtle.leapforward = random_speed
-
+            racing_turtle.LEAP_FORWARD = random_speed
 
     def tick(self):
-
         self.check_winner()
         self.turtle_move_forward()
         if not self.winner:
             self.screen.update()
             self.screen.ontimer(self.tick, self.settings.frame_delay_ms)
 
-
     def check_winner(self):
-
         for racing_turtle in self.turtles:
-            if racing_turtle.xcor() > (self.settings.running_distance / 2) - 14:
+            if (
+                racing_turtle.new_turtle.xcor()
+                > (self.settings.running_distance / 2) - 14
+            ):
                 self.winner = racing_turtle
-                print(self.winner.color())
-
+                print(self.winner.new_turtle.color())
 
     def main(self):
-
         self.set_turtles()
         self.assing_random_speed()
         self.tick()
