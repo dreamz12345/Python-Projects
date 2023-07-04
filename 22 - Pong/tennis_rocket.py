@@ -48,9 +48,9 @@ class TennisRocket:
         if {"up", "down"} == self.keys_pressed:
             pass
         elif "up" in self.keys_pressed and self.tennis_rocket.position()[1] < 240:
-            self.tennis_rocket.forward(1)
+            self.tennis_rocket.forward(10)
         elif "down" in self.keys_pressed and self.tennis_rocket.position()[1] > -240:
-            self.tennis_rocket.backward(1)
+            self.tennis_rocket.backward(10)
 
     def hitbox(self):
         x = self.tennis_rocket.position()[0]

@@ -10,7 +10,7 @@ def update_screen():
     ball.upadate_pos()
     scoreboard.update_score()
     screen.update()
-    screen.ontimer(fun=update_screen, t=1)
+    screen.ontimer(fun=update_screen, t=10)
 
 
 screen = turtle.Screen()

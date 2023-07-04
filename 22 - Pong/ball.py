@@ -14,6 +14,7 @@ class Ball:
         self.ball.color("white")
         self.ball.shape("circle")
         self.ball.shapesize(1)
+        self.speed = 5
         self.ball.penup()
         self.reset_ball()
 
@@ -26,7 +27,7 @@ class Ball:
             self.left_paddle_collision()
         elif self.paddle_collision(self.paddle_r):
             self.right_paddle_collision()
-        self.ball.forward(1)
+        self.ball.forward(self.speed)
 
     def screen_edge_collision(self):
         self.ball.setheading(-self.ball.heading())
@@ -69,6 +70,7 @@ class Ball:
                 self.ball.setheading(200 - self.ball.heading())
             else:
                 self.ball.setheading(180 - self.ball.heading())
+            self.speed += 2
 
     def left_paddle_collision(self):
         paddle_position = self.paddle_l.tennis_rocket.position()[1]
@@ -80,9 +82,11 @@ class Ball:
                 self.ball.setheading(160 - self.ball.heading())
             else:
                 self.ball.setheading(180 - self.ball.heading())
+            self.speed += 2
 
     def reset_ball(self):
         self.ball.goto(0, 0)
+        self.speed = 5
         random_number = random.randint(0, 1)
         # Set ball direction to left or right
         if random_number == 0:
