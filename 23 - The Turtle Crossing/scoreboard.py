@@ -10,3 +10,12 @@ class Scoreboard(turtle.Turtle):
         self.penup()
         self.goto(-260, 260)
         self.score = 0
+        self.display_score()
+
+    def increase_score(self):
+        self.clear()
+        self.score += 1
+        self.display_score()
+
+    def display_score(self):
+        self.write(arg=f"Score: {self.score}", font=("Arial", 20, "bold"))

@@ -23,9 +23,20 @@ class Car(turtle.Turtle):
         self.goto(self.X_OFFSET, random_y)
         self.setheading(self.FACE_WEST)
 
-    def update_pos(self, car_speed: float):
+    def update_pos(self, car_speed):
         self.forward(car_speed)
 
     def should_delete_car(self) -> bool:
         if self.position()[0] < -250:
             return True
+
+    def hitbox(self) -> tuple:
+        x = self.position()[0]
+        y = self.position()[1]
+        width = (x - 30, x + 30)
+        height = (y - 25, y + 25)
+        hitbox = (width, height)
+        return hitbox
+
+    def increase_speed(self, speed):
+        self.car_speed += speed

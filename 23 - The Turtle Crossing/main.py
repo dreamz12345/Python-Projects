@@ -2,6 +2,7 @@ import turtle
 from car import Car
 import random
 from player import Player
+from scoreboard import Scoreboard
 
 
 def update_cars():
@@ -38,8 +39,17 @@ def print_number_of_cars():
 
 
 def game_over():
-    screen.bye()
+    global tickrate_delay
+    tickrate_delay = 100000
     print("Game Over!")
+
+
+def player_reached_finish():
+    if player.reached_finish():
+        global car_speed
+        player.reset_pos()
+        scoreboard.increase_score()
+        car_speed += 0.2
 
 
 def update_screen():
@@ -47,11 +57,13 @@ def update_screen():
     update_cars()
     delete_car()
     player.update_pos()
+    player_reached_finish()
     check_collision()
     screen.update()
-    screen.ontimer(fun=update_screen, t=10)
+    screen.ontimer(fun=update_screen, t=tickrate_delay)
 
 
+tickrate_delay = 10
 screen = turtle.Screen()
 screen.tracer(0)
 screen.setup(width=600, height=600)
@@ -60,6 +72,7 @@ screen.listen()
 car_speed = 1.5
 list_of_cars = []
 player = Player(screen)
+scoreboard = Scoreboard()
 
 update_screen()
 screen.mainloop()

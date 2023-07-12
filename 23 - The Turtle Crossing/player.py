@@ -17,10 +17,10 @@ class Player(turtle.Turtle):
         self.shapesize(self.STRETCH_FACTOR)
         self.setheading(self.FACE_NORTH)
         self.penup()
-        self.set_position()
+        self.reset_pos()
         self.move(screen)
 
-    def set_position(self):
+    def reset_pos(self):
         self.goto(0, self.OFFSET)
 
     def move(self, screen: turtle._Screen):
@@ -38,19 +38,19 @@ class Player(turtle.Turtle):
         flag_2 = False
         flag_3 = False
         flag_4 = False
-        car_x = car.position()[0]
-        car_y = car.position()[1]
-        car_width = (car_x - 30, car_x + 30)
-        car_height = (car_y - 25, car_y + 25)
-        car_hitbox = (car_width, car_height)
-        if self.position()[0] > car_hitbox[0][0]:
+        if self.position()[0] > car.hitbox()[0][0]:
             flag_1 = True
-        if self.position()[0] < car_hitbox[0][1]:
+        if self.position()[0] < car.hitbox()[0][1]:
             flag_2 = True
-        if self.position()[1] > car_hitbox[1][0]:
+        if self.position()[1] > car.hitbox()[1][0]:
             flag_3 = True
-        if self.position()[1] < car_hitbox[1][1]:
+        if self.position()[1] < car.hitbox()[1][1]:
             flag_4 = True
         if flag_1 and flag_2 and flag_3 and flag_4:
             is_collision = True
         return is_collision
+
+    def reached_finish(self):
+        if self.position()[1] > 275:
+            self.reset_pos()
+            return True
