@@ -2,10 +2,10 @@ import turtle
 import pandas
 
 
-df = pandas.read_csv("25 - Pandas/50_states.csv")
+df = pandas.read_csv("50_states.csv")
 screen = turtle.Screen()
 screen.title("Guess US states Game!")
-screen.bgpic("25 - Pandas/blank_states_img.gif")
+screen.bgpic("blank_states_img.gif")
 drawing_turtle = turtle.Turtle(visible=False)
 drawing_turtle.penup()
 
